@@ -1,1 +1,0 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/Users/noedormoy/Documents/Code/42/sys_res/inception-of-things/p1","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
