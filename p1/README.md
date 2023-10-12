@@ -2,7 +2,7 @@
 Commandes Vagrant :
 - **vagrant init** : initialise le fichier Vagrantfile
 - **vagrant up** : demarre la machine virtuelle
-- **vagrant ssh** : se connecte a la machine virtuelle
+- **vagrant ssh** : se connecte a la machine virtuelle --> vagrant ssh ndormoyS
 - **vagrant halt** : eteint la machine virtuelle
 - **vagrant destroy** : detruit la machine virtuelle
 - **vagrant reload** : recharge la machine virtuelle
@@ -23,6 +23,8 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+export VAGRANT_HOME=/path/to/external/disk/vagrant
+default : ~/.vagrant.d
 
 
 

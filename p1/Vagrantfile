@@ -1,42 +1,46 @@
 #-----------------------------Variables---------------------------------
 IMAGE = "centos/8"
-
-MEMORY = "2048"
-CPUS = "2"
-
+MEMORY = 1024
+CPUS = 1
 S_HOSTNAME = "ndormoyS"
-W_HOSTNAME = "ndormoyW"
-
+W_HOSTNAME = "ndormoySW"
 S_IP = "192.168.56.110"
 W_IP = "192.168.56.111"
-
+S_SCRIPT = File.join(__dir__, "elements", "server.sh") 
+W_SCRIPT = File.join(__dir__, "elements", "worker.sh") 
+DISABLE_SSH_PASWD = File.join(__dir__, "elements", "disable_ssh_paswd.sh")
 
 #-----------------------------Base Configuration------------------------
 Vagrant.configure("2") do |config|
-  config.vm.box = [IMAGE]
+  config.vm.box = IMAGE
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = true
     # Customize the amount of memory on the VM:
-    vb.memory = [MEMORY]
-    vb.cpus = [CPUS]
+    vb.memory = MEMORY
+    vb.cpus = CPUS
   end
 
   #---------------------------Server------------------------------------
-  config.vm.define "ndormoyS" do |server|
-    server.vm.hostname = "S_HOSTNAME"
+  config.vm.define S_HOSTNAME do |server|
+    server.vm.hostname = S_HOSTNAME
     server.vm.network "private_network", type: "dhcp"
-    server.vm.network "private_network", ip: [S_IP]
+    server.vm.network "private_network", ip: S_IP
+    # run the script for server
+    server.vm.provision "shell", path: DISABLE_SSH_PASWD
+    server.vm.provision "shell", path: S_SCRIPT
   end
-
 
   #---------------------------Worker------------------------------------
-  config.vm.define "ndormoySW" do |worker|
-    worker.vm.hostname = "W_HOSTNAME"
+  config.vm.define W_HOSTNAME do |worker|
+    worker.vm.hostname = W_HOSTNAME
     worker.vm.network "private_network", type: "dhcp"
-    worker.vm.network "private_network", ip: [W_IP]
-  end
+    worker.vm.network "private_network", ip: W_IP
+    # run the script for worker
+    worker.vm.provision "shell", path: DISABLE_SSH_PASWD
+    worker.vm.provision "shell", path: W_SCRIPT
 
+  end
 end
 
 
