@@ -26,6 +26,13 @@ Vagrant.configure("2") do |config|
     server.vm.hostname = S_HOSTNAME
     server.vm.network "private_network", type: "dhcp"
     server.vm.network "private_network", ip: S_IP
+    # rename VM
+    server.vm.provider "virtualbox" do |v|
+      v.name = S_HOSTNAME
+    # allow SSH access
+    server.ssh.forward_agent = true
+    end
+
     # run the script for server
     server.vm.provision "shell", path: DISABLE_SSH_PASWD
     server.vm.provision "shell", path: S_SCRIPT
@@ -36,6 +43,12 @@ Vagrant.configure("2") do |config|
     worker.vm.hostname = W_HOSTNAME
     worker.vm.network "private_network", type: "dhcp"
     worker.vm.network "private_network", ip: W_IP
+    # rename VM
+    worker.vm.provider "virtualbox" do |v|
+      v.name = W_HOSTNAME
+    # allow SSH access
+    worker.ssh.forward_agent = true
+    end
     # run the script for worker
     worker.vm.provision "shell", path: DISABLE_SSH_PASWD
     worker.vm.provision "shell", path: W_SCRIPT

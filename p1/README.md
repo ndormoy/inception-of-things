@@ -26,7 +26,9 @@ end
 export VAGRANT_HOME=/path/to/external/disk/vagrant
 default : ~/.vagrant.d
 
-
+Pour se connecter en SSH :
+vagrant ssh ndormoyS
+vagrant ssh ndormoySW
 
 
 Ce qu'il faut tester :
