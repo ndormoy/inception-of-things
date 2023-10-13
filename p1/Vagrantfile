@@ -1,17 +1,13 @@
 #-----------------------------Variables---------------------------------
-IMAGE = "centos/8"
+IMAGE = "generic/centos8"
 MEMORY = 1024
 CPUS = 1
 S_HOSTNAME = "ndormoyS"
 W_HOSTNAME = "ndormoySW"
 S_IP = "192.168.56.110"
 W_IP = "192.168.56.111"
-# S_SCRIPT = File.join(__dir__, "elements", "server.sh")
-# W_SCRIPT = File.join(__dir__, "elements", "worker.sh") 
 S_SCRIPT = File.join(__dir__, "elements", "install_k3s_server.sh")
 W_SCRIPT = File.join(__dir__, "elements", "install_k3s_worker.sh") 
-
-DISABLE_SSH_PASWD = File.join(__dir__, "elements", "disable_ssh_paswd.sh")
 
 #-----------------------------Base Configuration------------------------
 Vagrant.configure("2") do |config|
@@ -38,8 +34,6 @@ Vagrant.configure("2") do |config|
     
   end
   
-  # run the script for server
-  server.vm.provision "shell", path: DISABLE_SSH_PASWD
   # install k3s
   server.vm.provision "shell", path: S_SCRIPT
   end
@@ -53,23 +47,14 @@ Vagrant.configure("2") do |config|
     worker.vm.provider "virtualbox" do |v|
       v.name = W_HOSTNAME
     # allow SSH access
-    # worker.vm.provision "file", source: "./.ssh/id_rsa.pub", destination: "/tmp/id_rsa.pub"
-    # worker.vm.provision "file", source: "./.ssh/id_rsa", destination: "/tmp/id_rsa"
     worker.ssh.forward_agent = true
     end
-    # run the script for worker
-    worker.vm.provision "shell", path: DISABLE_SSH_PASWD
     # install k3s using the token from the server
-    # worker.vm.provision "shell", path: W_SCRIPT
-    worker.vm.provision "shell", inline: <<-SHELL
-    # Wait for the server provisioning to finish by checking if the token file exists
-    while [ ! -f /vagrant/server_node_token ]; do
-      sleep 5
-    done
+    # # Install K3s using the token from the server
+    # K3S_TOKEN=$(cat /vagrant/server_node_token) sh #{W_SCRIPT}
+    worker.vm.provision "shell", path: W_SCRIPT
 
-    # Install K3s using the token from the server
-    K3S_TOKEN=$(cat /vagrant/server_node_token) sh #{W_SCRIPT}
-  SHELL
+  # SHELL
 
 
   end

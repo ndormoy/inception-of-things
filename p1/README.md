@@ -30,6 +30,9 @@ Pour se connecter en SSH :
 vagrant ssh ndormoyS
 vagrant ssh ndormoySW
 
+Pour regler pb shared file ?
+vagrant plugin install vagrant-vbguest --> marche pas
+
 
 Ce qu'il faut tester :
 ```
