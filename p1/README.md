@@ -25,8 +25,12 @@ https://docs.k3s.io/installation/network-options
 
 Ce qu'il faut tester :
 ```
-ifconfig eth 1
+ifconfig eth    1
 ```
 ```
 kubectl get nodes -o wide
 ```
+
+kubectl cluster-info | grep 'KubeAPI server'
+
+hostname
