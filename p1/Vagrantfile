@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
   #---------------------------Server------------------------------------
   config.vm.define S_HOSTNAME do |server|
     server.vm.hostname = S_HOSTNAME
-    server.vm.network "private_network", type: "dhcp"
+    # server.vm.network "private_network", type: "dhcp"
     server.vm.network "private_network", ip: S_IP
     # rename VM
     server.vm.provider "virtualbox" do |v|
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
   #---------------------------Worker------------------------------------
   config.vm.define W_HOSTNAME do |worker|
     worker.vm.hostname = W_HOSTNAME
-    worker.vm.network "private_network", type: "dhcp"
+    # worker.vm.network "private_network", type: "dhcp"
     worker.vm.network "private_network", ip: W_IP
     # rename VM
     worker.vm.provider "virtualbox" do |v|
