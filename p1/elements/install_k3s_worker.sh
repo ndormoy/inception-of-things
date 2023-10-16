@@ -12,4 +12,5 @@
 WORKER_IP="192.168.42.111"
 # curl -sfL https://get.k3s.io | K3S_URL="https://ndormoyS:6443" K3S_TOKEN="$(cat /vagrant/server_node_token/node-token)" sh -
 
-curl -sfL https://get.k3s.io | K3S_URL="https://<k3s_master_ip>:6443" K3S_TOKEN="$(cat /vagrant/server_node_token/node-token)" sh -s - --node-label 'node_type=worker' --kubelet-arg 'config=/etc/rancher/k3s/kubelet.config' --kube-proxy-arg 'metrics-bind-address=0.0.0.0'
+curl -sfL https://get.k3s.io | K3S_URL="https://ndormoyS:6443" K3S_TOKEN="$(cat /vagrant/server_node_token/node-token)" sh -s - --node-label 'node_type=worker' --kubelet-arg 'config=/etc/rancher/k3s/kubelet.config' --kube-proxy-arg 'metrics-bind-address=0.0.0.0'
+

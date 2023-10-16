@@ -9,11 +9,14 @@ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /
 
 # # Set the desired server node IP address and install K3s in server mode
 SERVER_IP="192.168.56.110"
-# curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --node-ip=${SERVER_IP}" sh -
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --write-kubeconfig-mode '0644' --kubelet-arg 'config=/etc/rancher/k3s/kubelet.config' --node-ip ${SERVER_IP}" sh -
+# curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --write-kubeconfig-mode '0644' --kubelet-arg 'config=/etc/rancher/k3s/kubelet.config' --node-ip ${SERVER_IP}" sh -
+
+# ExecStart=/usr/local/bin/k3s server --write-kubeconfig-mode 0644 --kubelet-arg "config=/etc/rancher/k3s/kubelet.config" --node-ip=192.168.56.110
 
 
+K3S_COMMAND="server --write-kubeconfig-mode 0644 --kubelet-arg 'config=/etc/rancher/k3s/kubelet.config' --node-ip ${SERVER_IP}"
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="${K3S_COMMAND}" sh -
 
 # sleep 10
 
