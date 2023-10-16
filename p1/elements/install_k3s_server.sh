@@ -14,7 +14,6 @@ SERVER_IP="192.168.56.110"
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --write-kubeconfig-mode '0644' --kubelet-arg 'config=/etc/rancher/k3s/kubelet.config' --node-ip ${SERVER_IP}" sh -
 
 
-/usr/local/bin/k3s server --write-kubeconfig-mode 0644 --kubelet-arg "config=/etc/rancher/k3s/kubelet.config" --node-ip="${SERVER_IP}"
 
 # sleep 10
 
