@@ -19,14 +19,21 @@ WORKER_IP="192.168.56.111"
 # curl -sfL https://get.k3s.io | K3S_TOKEN="$(cat /vagrant/server_node_token/node-token)"  sh -s - agent --server https://${MASTER_IP}:6443 --node-ip ${WORKER_IP}
 
 
+sudo systemctl disable firewalld --now
+# sudo ufw allow 6443/tcp
+echo "LOLILOL"
+sudo mkdir -p ~/.kube
+sudo cp /vagrant/server_node_token/k3s.yaml ~/.kube/config
 
 TOKEN="$(cat /vagrant/server_node_token/node-token)"
+# TOKEN="/vagrant/server_node_token/node-token"
 
 echo "BLABLA : token = $TOKEN"
-sudo su
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+# sudo su
+# export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+export KUBECONFIG="/vagrant/server_node_token/k3s.yaml"
 
-K3S_COMMAND="agent --server https://${MASTER_IP}:6443 --token-file ${TOKEN} --node-ip=${WORKER_IP}"
+K3S_COMMAND="agent --server https://${MASTER_IP}:6443 --flannel-iface eth1 --token ${TOKEN} --node-ip ${WORKER_IP} --node-name 'ndormoySW'"
 
 echo "BLABLA  K3S_COMMAND: $K3S_COMMAND"
 

@@ -21,38 +21,48 @@ Vagrant.configure("2") do |config|
   end
   # Configure synced folder
   config.vm.synced_folder ".", "/vagrant"
+  $DISABLE_FIREWALL_SCRIPT = <<-SHELL
+    sudo systemctl disable --now firewalld
+  SHELL
 
   #---------------------------Server------------------------------------
   config.vm.define S_HOSTNAME do |server|
     server.vm.hostname = S_HOSTNAME
-    # server.vm.network "private_network", type: "dhcp"
+    server.vm.network "private_network", type: "dhcp"
     server.vm.network "private_network", ip: S_IP
+
     # rename VM
     server.vm.provider "virtualbox" do |v|
       v.name = S_HOSTNAME
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
     server.ssh.forward_agent = true
     
-  end
+  # end
   
-  # install k3s
-  server.vm.provision "shell", path: S_SCRIPT
+    # install k3s
+    server.vm.provision "shell", path: S_SCRIPT
   end
 
   #---------------------------Worker------------------------------------
   config.vm.define W_HOSTNAME do |worker|
     worker.vm.hostname = W_HOSTNAME
-    # worker.vm.network "private_network", type: "dhcp"
+    worker.vm.network "private_network", type: "dhcp"
     worker.vm.network "private_network", ip: W_IP
+
     # rename VM
     worker.vm.provider "virtualbox" do |v|
       v.name = W_HOSTNAME
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
     # allow SSH access
     worker.ssh.forward_agent = true
-    end
-    # install k3s using the token from the server
-    # # Install K3s using the token from the server
-    # K3S_TOKEN=$(cat /vagrant/server_node_token) sh #{W_SCRIPT}
-    worker.vm.provision "shell", path: W_SCRIPT
+    # end
+
+
+    # worker.vm.provision "shell", path: W_SCRIPT
 
   # SHELL
 
@@ -87,13 +97,6 @@ end
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-
-  # Disable the default share of the current code directory. Doing this
-  # provides improved isolation between the vagrant box and your host
-  # by making sure your Vagrantfile isn't accessable to the vagrant box.
-  # If you use this you may want to enable additional shared subfolders as
-  # shown above.
-  # config.vm.synced_folder ".", "/vagrant", disabled: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
