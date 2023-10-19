@@ -1,16 +1,12 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 # cat /var/log/k3s-agent.log
 
-
-# server_ip = "192.168.56.110"
-# agents = { "agent1" => "192.168.56.111" }
-
-S_IP = "192.168.56.110"
-W_IP = "192.168.56.111"
+IMAGE = "generic/alpine37"
+MEMORY = 1024
+CPUS = 1
 S_HOSTNAME = "ndormoyS"
 W_HOSTNAME = "ndormoySW"
+S_IP = "192.168.56.110"
+W_IP = "192.168.56.111"
 
 # Extra parameters in INSTALL_K3S_EXEC variable because of
 # K3s picking up the wrong interface when starting server and agent
@@ -19,7 +15,13 @@ W_HOSTNAME = "ndormoySW"
 server_script = <<-SHELL
     sudo -i
     apk add curl
-    export INSTALL_K3S_EXEC="--write-kubeconfig-mode=644 --bind-address=#{S_IP} --node-external-ip=#{S_IP} --flannel-iface=eth1"
+
+    rm -rf /vagrant/server_node_token
+    mkdir -p /vagrant/server_node_token
+
+    # export INSTALL_K3S_EXEC="--write-kubeconfig-mode=644 --bind-address=#{S_IP} --node-external-ip=#{S_IP} --flannel-iface=eth1"
+    export INSTALL_K3S_EXEC="--write-kubeconfig-mode=644 --bind-address=#{S_IP} --flannel-iface=eth1"
+
     echo "INSTALL_K3S_EXEC : ${INSTALL_K3S_EXEC}"
     export KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
     echo "KUBECONFIG : ${KUBECONFIG}"
@@ -27,24 +29,26 @@ server_script = <<-SHELL
     curl -sfL https://get.k3s.io | sh -
     echo "Sleeping for 5 seconds to wait for k3s to start"
     sleep 15
-    sudo cp /var/lib/rancher/k3s/server/node-token /vagrant_shared
+    sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/server_node_token/
     echo "/var/lib/rancher/k3s/server/node-token : $(cat /var/lib/rancher/k3s/server/node-token)"
-    chmod 755 -R /vagrant_shared
+    chmod 755 -R /vagrant/server_node_token/
+
     chmod 755 /etc/rancher/k3s/k3s.yaml
-    sudo cp /etc/rancher/k3s/k3s.yaml /vagrant_shared
+    sudo cp /etc/rancher/k3s/k3s.yaml /vagrant/server_node_token/
+
     echo "/etc/rancher/k3s/k3s.yaml : $(cat /etc/rancher/k3s/k3s.yaml)"
     SHELL
 
 agent_script = <<-SHELL
     sudo -i
     apk add curl
-    # export KUBECONFIG="/vagrant_shared/k3s.yaml"
     export KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
     echo "KUBECONFIG : ${KUBECONFIG}"
-    # sudo mkdir -p ~/.kube
-    sudo cp /vagrant_shared/k3s.yaml /etc/rancher/k3s/k3s.yaml
+    sudo cp /vagrant/server_node_token/k3s.yaml /etc/rancher/k3s/k3s.yaml
+
     echo "/etc/rancher/k3s/k3s.yaml : $(cat /etc/rancher/k3s/k3s.yaml)"
-    export K3S_TOKEN_FILE=/vagrant_shared/node-token
+    export K3S_TOKEN_FILE=/vagrant/server_node_token/node-token
+
     echo "K3S_TOKEN_FILE : ${K3S_TOKEN_FILE}"
     export K3S_URL=https://#{S_IP}:6443
     echo "K3S_URL : ${K3S_URL}"
@@ -53,48 +57,33 @@ agent_script = <<-SHELL
     curl -sfL https://get.k3s.io | sh -
     SHELL
 
+#-----------------------------Base Configuration------------------------
 Vagrant.configure("2") do |config|
-  # config.vm.box = "generic/alpine314"
-  # config.vm.box = "generic/alpine38"
-  config.vm.box = "generic/alpine37"
+  config.vm.box = IMAGE
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = MEMORY
+    vb.cpus = CPUS
+  end
+  config.vm.synced_folder ".", "/vagrant"
 
+#---------------------------Server--------------------------------------
   config.vm.define S_HOSTNAME, primary: true do |server|
     server.vm.network "private_network", ip: S_IP
-    server.vm.synced_folder "./shared", "/vagrant_shared"
     server.vm.hostname = S_HOSTNAME
-    # server.vm.hostname = "server"
     server.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-      vb.cpus = "1"
       vb.name = S_HOSTNAME
     end
     server.vm.provision "shell", inline: server_script
   end
 
-  # agents.each do |agent_name, agent_ip|
-  #   config.vm.define agent_name do |agent|
-  #     agent.vm.network "private_network", ip: agent_ip
-  #     agent.vm.synced_folder "./shared", "/vagrant_shared"
-  #     agent.vm.hostname = agent_name
-  #     agent.vm.provider "virtualbox" do |vb|
-  #       vb.memory = "1024"
-  #       vb.cpus = "1"
-  #       v.name = W_HOSTNAME
-  #     end
-  #     agent.vm.provision "shell", inline: agent_script
-  #   end
-  # end
-
+#---------------------------Worker--------------------------------------
     config.vm.define W_HOSTNAME do |worker|
       worker.vm.network "private_network", ip: W_IP
-      worker.vm.synced_folder "./shared", "/vagrant_shared"
       worker.vm.hostname = W_HOSTNAME
       worker.vm.provider "virtualbox" do |vb|
-        vb.memory = "1024"
-        vb.cpus = "1"
         vb.name = W_HOSTNAME
       end
       worker.vm.provision "shell", inline: agent_script
     end
-  # end
 end
