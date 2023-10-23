@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: app1-service
   annotations:
-    kubernetes.io/ingress.class: traefik
+    spec.ingressClassName: traefik_app1
     traefik.ingress.kubernetes.io/preserve-host: "true"
 spec:
   selector:
@@ -12,9 +12,7 @@ spec:
   ports:
     - protocol: TCP 
       port: 80
-      # targetPort: 8080
   type: ClusterIP
-  # type: NodePort
 
 
 # le nom de l'application app1
