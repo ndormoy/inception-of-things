@@ -34,9 +34,8 @@ check_pod_started() {
             # all_pods=$(kubectl get pods --field-selector=status.phase=Running --no-headers -o custom-columns=":.metadata.name" | wc -l)
             echo "All pods started : $pods_name"
             for pod_name in $pods_name; do
-                echo "pod name = $pod_name"
+                echo "checking pod name = $pod_name is running"
                 check_pod_running "$pod_name"
-                echo "pouet"
             done
             break
         fi
@@ -70,6 +69,20 @@ check_pod_running() {
   done
 }
 
+check_ingress()
+{
+    ingress_name="$1"
+    while true; do
+        ingress_status=$(kubectl get ingress "$ingress_name" --no-headers -o custom-columns=":.status.loadBalancer.ingress")
+        if [ "$ingress_status" != "<none>" ]; then
+            echo "Ingress $ingress_name is running"
+            break  # Exit the loop when the pod is running
+        else
+            echo "Ingress $ingress_name is not running. Waiting..."
+            sleep 3  # Adjust the sleep duration as needed
+        fi
+    done
+}
 
 # Wait until all specified pods are running
 
@@ -89,23 +102,14 @@ check_service "app3-service"
 check_apply "/vagrant/elements/deployments/deploy_app1.yaml"
 check_apply "/vagrant/elements/deployments/deploy_app2.yaml"
 check_apply "/vagrant/elements/deployments/deploy_app3.yaml"
-# Get the names of all running pods
-# running_pods=$(kubectl get pods --field-selector=status.phase=Running --no-headers -o custom-columns=":.metadata.name")
-# all_pods=$(kubectl get pods --no-headers -o custom-columns=":.metadata.name")
-# echo "Running pods: $all_pods"
-
-# # Check the status of each running pod
-# for pod_name in $all_pods; do
-#   check_pod_running "$pod_name"
-#   echo "pouet"
-# done
 check_pod_started
 
 check_apply "/vagrant/elements/ingress/ingress_app1.yaml"
-sleep 5
+check_ingress "app1-ingress"
 check_apply "/vagrant/elements/ingress/ingress_app2.yaml"
-sleep 5
+check_ingress "app2-ingress"
 check_apply "/vagrant/elements/ingress/ingress_app3.yaml"
-sleep 5
+check_ingress "app3-ingress"
+check_ingress "default-ingress"
 
 
