@@ -44,6 +44,7 @@ kubectl logs app1-889477cc5-rqcq6 -n default
 ::1             localhost
 192.168.56.110 app1.com
 192.168.56.110 app2.com
+192.168.56.110 app3.com
 
 6# Added by Docker Desktop
 # To allow the same kube context to work on the host and the container:

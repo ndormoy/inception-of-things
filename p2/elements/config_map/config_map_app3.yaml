@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap3
+data:
+  index.html: |
+    <html>
+    <h1>BlueTeam, Welcome to Kubernetes</h1>
+    </br>
+    <h1><p>This is Deployment Three</p></h1>
