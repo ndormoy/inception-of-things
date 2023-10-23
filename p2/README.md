@@ -25,6 +25,8 @@ curl -H "Host:app1.com" 192.168.56.110
 
 kubectl describe pod app1-6757b6db4b-mvb9x
 
+kubectl describe configmap <configmap-name>
+
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
 
 
