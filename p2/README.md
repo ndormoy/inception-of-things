@@ -31,3 +31,23 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 http://app1.com
 
 kubectl logs app1-889477cc5-rqcq6 -n default
+
+```
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost ndormoy.42.fr exemple2.fr
+255.255.255.255	broadcasthost
+::1             localhost
+192.168.56.110 app1.com
+192.168.56.110 app2.com
+
+6# Added by Docker Desktop
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+# End of section
+
+```
