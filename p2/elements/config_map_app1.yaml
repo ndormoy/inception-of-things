@@ -1,0 +1,26 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: welcome-page-app1
+# data:
+#   welcome.html: |-
+#     <html>
+#       <head>
+#           <title>Welcome to app1</title>
+#       </head>
+#       <body>
+#           <h1>Welcome to app1</h1>
+#           <p>If you can see this message, you have reached the page successfully.</p>
+#       </body>
+#     </html>
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  index.html: |
+    <html>
+    <h1>BlueTeam, Welcome to Kubernetes</h1>
+    </br>
+    <h1><p>This is Deployment One</p></h1>

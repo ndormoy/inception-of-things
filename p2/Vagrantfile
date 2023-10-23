@@ -1,0 +1,34 @@
+# cat /var/log/k3s-agent.log
+
+IMAGE = "generic/alpine37"
+MEMORY = 4096
+CPUS = 1
+S_HOSTNAME = "ndormoyS"
+W_HOSTNAME = "ndormoySW"
+S_IP = "192.168.56.110"
+S_SCRIPT = File.join(__dir__, "elements", "install_k3s_server.sh")
+D_SCRIPT = File.join(__dir__, "elements", "deploy.sh")
+
+#-----------------------------Base Configuration------------------------
+Vagrant.configure("2") do |config|
+  config.vm.box = IMAGE
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = MEMORY
+    vb.cpus = CPUS
+  end
+  config.vm.synced_folder ".", "/vagrant"
+
+#---------------------------Server--------------------------------------
+  config.vm.define S_HOSTNAME, primary: true do |server|
+    server.vm.network "private_network", ip: S_IP
+    server.vm.hostname = S_HOSTNAME
+    server.vm.provider "virtualbox" do |vb|
+      vb.name = S_HOSTNAME
+    end
+    server.vm.provision "shell", path: S_SCRIPT, args: [S_IP]
+    server.vm.provision "shell", path: D_SCRIPT
+
+  end
+
+end
