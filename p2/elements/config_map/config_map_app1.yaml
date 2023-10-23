@@ -5,6 +5,34 @@ metadata:
 data:
   index.html: |
     <html>
-    <h1>BlueTeam, Welcome to Kubernetes</h1>
-    </br>
-    <h1><p>This is Deployment One</p></h1>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+            .container {
+                background-color: #ffffff;
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px auto;
+                width: 80%;
+                max-width: 600px;
+            }
+            h1 {
+                color: #007bff;
+            }
+            p {
+                font-size: 18px;
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Welcome to BlueTeam's Kubernetes Cluster</h1>
+            <p>This is the default page for unmatched hosts. Customize your Ingress configuration to define specific landing pages for different domains.</p>
+        </div>
+    </body>
+    </html>

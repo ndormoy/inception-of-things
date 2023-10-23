@@ -16,3 +16,22 @@ spec:
                 name: app3-service
                 port:
                   number: 80
+---
+# Default route (192.168.56.110 without host)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: default-ingress
+  annotations:
+    spec.ingressClassName: traefik-app3
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app3-service
+                port:
+                  number: 80
