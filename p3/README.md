@@ -20,4 +20,7 @@ sudo k3d cluster list --> Show cluster list
 sudo kubectl get namespaces --> Get namespaces
 
 
-sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --> Delete this cmd : sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --> Delete this cmd : sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml  
+
+<!-- This command retrieves the service information for the ArgoCD namespace using kubectl. -->
+sudo kubectl get svc -n argocd --> 

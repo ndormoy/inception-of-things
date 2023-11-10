@@ -33,7 +33,7 @@ done
 
 echo "All pods are now ready!"
 
-#Argo UI by default will run on port 80. To access it on port 8090 or any other alternative port on the local machine, run the following command
+# Permit to access the Argo CD UI on port 8080 --> go to web browser and 127.0.0.1:8080, we can acces to the Argo CD UI now
 sudo kubectl port-forward -n argocd svc/argocd-server 8080:443
 
 # ! Open localhost:8080 on the web browser to view Argo CD UI
