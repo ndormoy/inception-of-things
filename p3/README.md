@@ -23,4 +23,34 @@ sudo kubectl get namespaces --> Get namespaces
 sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --> Delete this cmd : sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml  
 
 <!-- This command retrieves the service information for the ArgoCD namespace using kubectl. -->
-sudo kubectl get svc -n argocd --> 
+sudo kubectl get svc -n argocd
+
+
+### Connect to ArgoCD UI
+The login is : admin  
+
+sudo kubectl get secret argocd-initial-admin-secret -n <mynamespace> -o yaml --> Get the password  
+
+o yaml  
+apiVersion: v1  
+data:  
+  password: blablabla  
+kind: Secret  
+metadata:  
+  creationTimestamp: "2023-11-10T14:51:30Z"  
+  name: argocd-initial-admin-secret  
+  namespace: argocd  
+  resourceVersion: "5433"  
+  uid: 0bdb49c4-ff41-49f8-9595-6dda685be60a  
+type: Opaque  
+
+After decode the password :  
+echo blablabla | base64 --decode  
+
+
+We can now connect to the ArgoCD UI at the URL 127.0.0.1:8080
+
+
+### Configure ArgoCD
+
+Clone the github project : https://hub.docker.com/r/wil42/playground
