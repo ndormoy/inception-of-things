@@ -6,6 +6,10 @@ TODO:  The only mandatory
 requirement is to put the login of a member of the group in the name
 of your repository.
 
+1) run install_docker.sh
+2) run install_k3d.sh
+3) run init.sh
+
 ## Difference between k3s and k3d
 
 k3d is a tol for running k3s cluster insde Docker containers, mainly for local development abd test.  
