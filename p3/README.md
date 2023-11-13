@@ -1,14 +1,6 @@
-TODO: need to make a script that install everything. cf "You will need Docker for K3d to work, and probably some other
-softwares too. Thus, you have to write a script to install every
-necessary packages and tools during your defense."
-
-TODO:  The only mandatory
-requirement is to put the login of a member of the group in the name
-of your repository.
-
-1) run install_docker.sh
-2) run install_k3d.sh
-3) run init.sh
+1) ```run install_docker.sh```
+2) ```run install_k3d.sh```
+3) ```run init.sh```
 
 ## Difference between k3s and k3d
 
@@ -20,20 +12,22 @@ You might use k3d when you want to run k3s clusters wihtin Docker containers, an
 
 ## Commandes :
 
-sudo k3d cluster list --> Show cluster list
-sudo kubectl get namespaces --> Get namespaces
+```sudo k3d cluster list``` --> Show cluster list  
+```sudo kubectl get namespaces``` --> Get namespaces  
 
 
-sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml --> Delete this cmd : sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml  
+
+install argocd in namespace argocd --> ```sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml```  
+Delete previous cmd :  ```sudo kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml```
 
 <!-- This command retrieves the service information for the ArgoCD namespace using kubectl. -->
-sudo kubectl get svc -n argocd
+```sudo kubectl get svc -n argocd``` --> is used to retrieve information about the services in the argocd namespace of a Kubernetes cluster
 
 
 ### Connect to ArgoCD UI
 The login is : admin  
 
-sudo kubectl get secret argocd-initial-admin-secret -n <mynamespace> -o yaml --> Get the password  
+```sudo kubectl get secret argocd-initial-admin-secret -n <mynamespace> -o yaml``` --> Get the password
 
 o yaml  
 apiVersion: v1  
@@ -49,12 +43,24 @@ metadata:
 type: Opaque  
 
 After decode the password :  
-echo blablabla | base64 --decode  
+```echo blablabla | base64 --decode```
 
 
-We can now connect to the ArgoCD UI at the URL 127.0.0.1:8080
+We can now connect to the ArgoCD UI at the URL 127.0.0.1:8080  
+
+Faster solution : 
+```kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo```
+
 
 
 ### Configure ArgoCD
 
-Clone the github project : https://hub.docker.com/r/wil42/playground
+The img : https://hub.docker.com/r/wil42/playground  
+docker pull wil42/playground:v1  
+
+
+1) Create the configuration files and put them into a git repository
+2) put the img path in it
+3) ```sudo k3d kubeconfig get my-k3d-cluster > ~/.kube/config-my-k3d-cluster``` --> Put the kubeconfig file in the right place
+4) ```sudo export KUBECONFIG=~/.kube/config-my-k3d-cluster``` --> Change the kubeconfig path to the right place
+4) ```kubectl apply -f application.yaml``` file --> create or update resources in a Kubernetes cluster based on the definitions provided in the YAML file
