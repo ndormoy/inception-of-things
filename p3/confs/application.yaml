@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-argo-appli
+  namespace: argocd # The namespace where argocd is installed
+spec:
+  project: default
+  source:
+    path: dev # sync the files from the dev folder
+    repoURL: https://github.com/ndormoy/IOT-config-ndormoy.git
+    targetRevision: HEAD # Always take the latest commit from Head
+  destination:
+    namespace: dev # The namespace where the resources will be deployed
+    server: https://kubernetes.default.svc # Address of the kubernetes server (So the API server)
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true # Create the namespace if it does not exist
+    automated:
+      prune: true # Delete the resources that are not in the git repo
+      selfHeal: true # If the resources are deleted, recreate them
+      # allowEmpty: true # Allow the repo to be empty

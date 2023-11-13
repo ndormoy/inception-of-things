@@ -1,6 +1,7 @@
-1) ```run install_docker.sh```
-2) ```run install_k3d.sh```
-3) ```run init.sh```
+1) ```./install_docker.sh```
+2) ```./install_k3d.sh```
+3) ```./init.sh```
+4) ```./launch_app.sh```
 
 ## Difference between k3s and k3d
 
