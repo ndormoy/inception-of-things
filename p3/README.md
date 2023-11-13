@@ -23,6 +23,9 @@ Delete previous cmd :  ```sudo kubectl delete -n argocd -f https://raw.githubuse
 <!-- This command retrieves the service information for the ArgoCD namespace using kubectl. -->
 ```sudo kubectl get svc -n argocd``` --> is used to retrieve information about the services in the argocd namespace of a Kubernetes cluster
 
+### Create secure tunnel to kubernetes service argo cd
+
+```sudo kubectl port-forward -n argocd svc/argocd-server 8080:443```
 
 ### Connect to ArgoCD UI
 The login is : admin  
@@ -49,7 +52,7 @@ After decode the password :
 We can now connect to the ArgoCD UI at the URL 127.0.0.1:8080  
 
 Faster solution : 
-```kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo```
+```sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo```
 
 
 
@@ -62,5 +65,5 @@ docker pull wil42/playground:v1
 1) Create the configuration files and put them into a git repository
 2) put the img path in it
 3) ```sudo k3d kubeconfig get my-k3d-cluster > ~/.kube/config-my-k3d-cluster``` --> Put the kubeconfig file in the right place
-4) ```sudo export KUBECONFIG=~/.kube/config-my-k3d-cluster``` --> Change the kubeconfig path to the right place
-4) ```kubectl apply -f application.yaml``` file --> create or update resources in a Kubernetes cluster based on the definitions provided in the YAML file
+4) ```export KUBECONFIG=~/.kube/config-my-k3d-cluster``` --> Change the kubeconfig path to the right place
+4) ```sudo kubectl apply -f application.yaml``` file --> create or update resources in a Kubernetes cluster based on the definitions provided in the YAML file
