@@ -33,6 +33,10 @@ done
 
 echo "All pods are now ready!"
 
+# Display the password for argoCD UI
+echo "Login: admin\nPassword: "
+sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+
 # Permit to access the Argo CD UI on port 8080 --> go to web browser and 127.0.0.1:8080, we can acces to the Argo CD UI now
 sudo kubectl port-forward -n argocd svc/argocd-server 8080:443
 
