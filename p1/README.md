@@ -36,3 +36,25 @@ kubectl cluster-info | grep 'KubeAPI server'
 hostname
 
 curl -sfL https://get.k3s.io | K3S_URL="https://192.168.56.110:6443" K3S_TOKEN="$(cat /vagrant/server_node_token/node-token)" sh -
+
+-------------------------------------------
+
+
+Installer git
+
+Installer wget :
+sudo apt-get install wget
+
+Installer VMBox :oc 
+
+sudo apt install virtualbox
+
+Activer la virtualisation imbriquee.
+
+
+Installer Vagrant : 
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install vagrant
+
+Lancer le pr
