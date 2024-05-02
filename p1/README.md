@@ -40,10 +40,18 @@ curl -sfL https://get.k3s.io | K3S_URL="https://192.168.56.110:6443" K3S_TOKEN="
 -------------------------------------------
 
 
-Installer git
+Installer git :
+sudo apt install git-all
 
 Installer wget :
 sudo apt-get install wget
+
+Install zsh:
+sudo apt install zsh -y
+
+Installer OMZSH:
+sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
 
 Installer VMBox :oc 
 
