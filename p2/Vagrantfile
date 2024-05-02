@@ -1,6 +1,7 @@
 # cat /var/log/k3s-agent.log
 
-IMAGE = "generic/alpine37"
+# IMAGE = "generic/alpine37"
+IMAGE = "generic/alpine319"
 MEMORY = 4096
 CPUS = 1
 S_HOSTNAME = "ndormoyS"
