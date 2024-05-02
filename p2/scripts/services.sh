@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. /vagrant/elements/scripts/config_map.sh
+. /vagrant/scripts/config_map.sh
 
 # Function to check if a service is running (or exists)
 check_service() {
@@ -14,9 +14,9 @@ check_service() {
   echo "Service $service_name is running (or now exists)"
 }
 
-check_apply "/vagrant/elements/services/service_app1.yaml"
-check_apply "/vagrant/elements/services/service_app2.yaml"
-check_apply "/vagrant/elements/services/service_app3.yaml"
+check_apply "/vagrant/confs/services/service_app1.yaml"
+check_apply "/vagrant/confs/services/service_app2.yaml"
+check_apply "/vagrant/confs/services/service_app3.yaml"
 
 check_service "app1-service"
 check_service "app2-service"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. /vagrant/elements/scripts/config_map.sh
+. /vagrant/scripts/config_map.sh
 
 pod_count=5  # Number of pods you want to check
 check_pod_started() {
@@ -47,8 +47,8 @@ check_pod_running() {
   done
 }
 
-check_apply "/vagrant/elements/deployments/deploy_app1.yaml"
-check_apply "/vagrant/elements/deployments/deploy_app2.yaml"
-check_apply "/vagrant/elements/deployments/deploy_app3.yaml"
+check_apply "/vagrant/confs/deployments/deploy_app1.yaml"
+check_apply "/vagrant/confs/deployments/deploy_app2.yaml"
+check_apply "/vagrant/confs/deployments/deploy_app3.yaml"
 
 check_pod_started

@@ -8,8 +8,8 @@ S_HOSTNAME = "ndormoyS"
 W_HOSTNAME = "ndormoySW"
 S_IP = "192.168.56.110"
 W_IP = "192.168.56.111"
-S_SCRIPT = File.join(__dir__, "elements", "install_k3s_server.sh")
-W_SCRIPT = File.join(__dir__, "elements", "install_k3s_worker.sh")
+S_SCRIPT = File.join(__dir__, "scripts", "install_k3s_server.sh")
+W_SCRIPT = File.join(__dir__, "scripts", "install_k3s_worker.sh")
 
 #-----------------------------Base Configuration------------------------
 Vagrant.configure("2") do |config|
