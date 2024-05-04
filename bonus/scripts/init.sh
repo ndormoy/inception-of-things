@@ -4,13 +4,12 @@ NAMESPACE_ARGO="argocd"
 NAMESPACE_DEV="dev"
 
 # create cluster
-#k3d cluster create dev-cluster --api-port 6550 -p 8080:80@loadbalancer -p 8443:443@loadbalancer --agents 2
-# kubectl cluster create my-k3d-cluster --api-port 6550 -p 8888:80
 sudo k3d cluster create my-k3d-cluster --api-port 6443 -p 8888:80
 
 # Create Namespaces
 sudo kubectl create namespace argocd
 sudo kubectl create namespace dev
+sudo kubectl create namespace gitlab
 
 # Install Argo CD
 sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -34,7 +33,7 @@ echo "All pods are now ready!"
 
 # Display the password for argoCD UI
 echo "Login: admin\nPassword: "
-sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode > .password.txt
 
 # Permit to access the Argo CD UI on port 8080 --> go to web browser and 127.0.0.1:8080, we can acces to the Argo CD UI now
 sudo kubectl port-forward -n argocd svc/argocd-server 8080:443

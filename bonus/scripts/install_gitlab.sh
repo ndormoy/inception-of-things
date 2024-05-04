@@ -12,4 +12,4 @@ helm init
 helm repo update gitlab
 helm search repo -l gitlab/gitlab-runner
 helm search repo -l gitlab/gitlab-runner
-helm install --namespace <NAMESPACE> gitlab-runner -f <CONFIG_VALUES_FILE> gitlab/gitlab-runner
+helm install --namespace gitlab gitlab-runner -f <CONFIG_VALUES_FILE> gitlab/gitlab-runner
