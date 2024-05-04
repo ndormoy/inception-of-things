@@ -15,9 +15,10 @@ Doc Valgrant :
 https://developer.hashicorp.com/vagrant/docs/networking/private_network
 
 Pour se connecter en SSH :
+```bash
 vagrant ssh ndormoyS
 vagrant ssh ndormoySW
-
+```
 
 k3s doc:
 https://docs.k3s.io/installation/network-options
@@ -50,19 +51,22 @@ Install zsh:
 sudo apt install zsh -y
 
 Installer OMZSH:
+```bash
 sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-
+```
 
 Installer VMBox :oc 
-
+```bash
 sudo apt install virtualbox
-
+```
 Activer la virtualisation imbriquee.
 
 
-Installer Vagrant : 
+Installer Vagrant :
+```bash
 wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install vagrant
+```
 
 Lancer le pr
