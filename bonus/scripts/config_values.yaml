@@ -1,0 +1,4 @@
+gitlabUrl: "https://gitlab.com"
+runnerRegistrationToken: "glrt-qymGTxqLLRVs_LfxziaE"
+rbac:
+  create: true
