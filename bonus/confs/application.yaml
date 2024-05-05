@@ -7,7 +7,8 @@ spec:
   project: default
   source:
     path: dev # sync the files from the dev folder
-    repoURL: https://github.com/ndormoy/IOT-config-ndormoy.git
+    # repoURL: https://github.com/ndormoy/IOT-config-ndormoy.git
+    repoURL: http://gitlab-webservice-default.gitlab.svc:8181/root/iot-conf-ndormoy.git
     targetRevision: HEAD # Always take the latest commit from Head
   destination:
     namespace: dev # The namespace where the resources will be deployed
