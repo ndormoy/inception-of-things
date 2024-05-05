@@ -1,5 +1,8 @@
 #!/bin/bash
 
+sudo helm uninstall gitlab -n gitlab
+sudo kubectl delete namespace gitlab
+
 sudo k3d cluster delete my-k3d-cluster
 sudo rm $(which k3d)
 sudo rm -rf ~/.kube
