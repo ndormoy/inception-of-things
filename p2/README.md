@@ -16,23 +16,23 @@ https://developer.hashicorp.com/vagrant/docs/networking/private_network
 
 https://kubernetes.io/docs/concepts/services-networking/service/
 
-code /etc/hosts
+```code /etc/hosts```
 
-kubectl get pods
-kubectl get services
-kubectl get ingress
-curl -H "Host:app1.com" 192.168.56.110
+```kubectl get pods```
+```kubectl get services```
+```kubectl get ingress```
+```curl -H "Host:app1.com" 192.168.56.110```
 
-kubectl describe pod app1-6757b6db4b-mvb9x
+```kubectl describe pod app1-6757b6db4b-mvb9x```
 
-kubectl describe configmap <configmap-name>
+```kubectl describe configmap <configmap-name>```
 
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
+```kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml```
 
 
 http://app1.com
 
-kubectl logs app1-889477cc5-rqcq6 -n default
+```kubectl logs app1-889477cc5-rqcq6 -n default```
 
 ```
 ##
