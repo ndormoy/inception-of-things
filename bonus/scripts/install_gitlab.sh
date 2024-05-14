@@ -5,6 +5,8 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 chmod 700 get_helm.sh
 ./get_helm.sh
 
+sudo kubectl create namespace gitlab
+
 # Install Gitlab
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update

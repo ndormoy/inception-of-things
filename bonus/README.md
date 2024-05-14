@@ -8,17 +8,18 @@ TO destroy:
 
 # https://docs.gitlab.com/ee/tutorials/create_register_first_runner/
 
-sudo kubectl get svc -n default
-sudo kubectl get pods
-sudo kubectl port-forward gitlab-nginx-ingress-controller-6f46d96bb-kds97 1080:443
+```sudo kubectl get svc -n default```
+
+```sudo kubectl get pods```
+
 
 https://forum.gitlab.com/t/installing-gitlab-on-local-kubernetes-cluster/66935
 
 gitlab-nginx-ingress-controller-6f46d96bb-894fh
 
-sudo kubectl port-forward service/gitlab-webservice-default 8889:8181 -n gitlab
+```sudo kubectl port-forward service/gitlab-webservice-default 8889:8181 -n gitlab```
 
-sudo kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -ojsonpath='{.data.password}' | base64 --decode ; echo
+```sudo kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -ojsonpath='{.data.password}' | base64 --decode ; echo```
 
 
 
@@ -43,7 +44,7 @@ repoURL: http://gitlab-webservice-default.gitlab.svc:8181/root/iot-conf-ndormoy.
 
 On voit ici qu'on a mit le webservice qu'on utilise pour gitlab, le namespace, le nom du repo et le port (dans kubernetes)
 
-6) sudo kubectl apply -f confs/application.yaml
+6) ```sudo kubectl apply -f confs/application.yaml```
 
 7) Puis tester en modifiant 
 dans deployment.yaml :
